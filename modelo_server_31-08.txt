@@ -1,0 +1,90 @@
+#include <WiFi.h>
+#include <ESPAsyncWebServer.h>
+
+// Substitua pelas credenciais da sua rede Wi-Fi
+const char* ssid = "NOME_DA_SUA_REDE";
+const char* password = "SENHA_DA_SUA_REDE";
+
+// Cria o servidor na porta 80
+AsyncWebServer server(80);
+
+// Pino do sensor (Exemplo: LDR ou potenciômetro no pino 34)
+const int pinoSensor = 34;
+
+// Função que lê o sensor e retorna o valor como String
+String lerSensor() {
+  int valor = analogRead(pinoSensor);
+  return String(valor);
+}
+
+// Código HTML e JavaScript da página web
+const char index_html[] PROGMEM = R"rawliteral(
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color: #f4f4f9; }
+        .card { background: white; padding: 20px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        .valor { font-size: 48px; color: #007bff; font-weight: bold; }
+    </style>
+</head>
+<body>
+ <div class="card">
+        <h1>Leitura do Sensor</h1>
+        <!-- O valor será inserido aqui pelo JavaScript -->
+        <div class="valor" id="valor-sensor">Carregando...</div>
+    </div>
+
+    <script>
+        // Função que busca o valor do sensor no ESP32
+        function atualizarDados() {
+            fetch('/sensor')
+                .then(response => response.text())
+                .then(dados => {
+                    document.getElementById('valor-sensor').innerText = dados;
+                })
+                .catch(err => console.error('Erro ao buscar dados:', err));
+        }
+
+        // Atualiza o valor a cada 1 segundo (1000 milissegundos)
+        setInterval(atualizarDados, 1000);
+    </script>
+</body>
+</html>
+)rawliteral";
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(pinoSensor, INPUT);
+
+  // Conecta ao Wi-Fi
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Conectando ao Wi-Fi...");
+  }
+ Serial.println("");
+  Serial.print("Conectado! Endereço IP: ");
+  Serial.println(WiFi.localIP());
+
+  // Rota para carregar a página principal (HTML)
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send_literal(200, "text/html", index_html);
+  });
+
+  // Rota que o JavaScript vai chamar para pegar apenas o número do sensor
+  server.on("/sensor", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(200, "text/plain", lerSensor());
+  });
+
+  // Inicia o servidor
+  server.begin();
+}
+
+void loop() {
+  // Com o ESPAsyncWebServer, o loop fica livre!
+}

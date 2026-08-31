@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+                <head>
+<meta charset="UTF-8">
+<meta http-equiv='refresh' content='0.2'>
+<title> Servidor Web </title>
+
+
+<style>
+body{
+h1{
+font-size: 200%;
+color: darkblue;
+}
+
+h2{
+font-size: 130%;
+color: lightred;
+}
+
+.Mesma_Linha{
+display: grid;
+}
+
+}
+</style>
+                </head>
+
+
+<body>
+<h1>ESP8266</h1>
+<br>
+  <script>
+    function sensor_gas() {
+    fetch('/gas')
+    .then(response=>response.text())
+    .then(dados => {
+        document.getElementById('valor_gas').innerText = dados;
+    })
+.catch(err => console.error('Erro ao buscar dados:', err));
+}
+  </script>
+<div class="Mesma_Linha">
+<h1>Presença de Gás:</h1>
+</div>
+
+<br>
+  <script>
+  </script>
+<div class="Mesma_Linha">
+<h1>Temperatura:</h1>
+</div>
+
+<br>
+  <script>
+  </script>
+<div class="Mesma_Linha">
+<h1>Estado do Led:</h1>
+<p> - Ligado</p>
+</div>
+<br>
+                </body>
+
+
+                </html>
