@@ -38,26 +38,47 @@ display: grid;
     .then(dados => {
         document.getElementById('valor_gas').innerText = dados;
     })
-.catch(err => console.error('Erro ao buscar dados:', err));
+.catch(err => console.error('Erro ao buscar gases:', err));
 }
+setInterval(sensor_gas, 1000);
   </script>
 <div class="Mesma_Linha">
 <h1>Presença de Gás:</h1>
+<p>add valor aqui</p>
 </div>
 
 <br>
   <script>
+  function temperatura() {
+    fetch('/temp')
+    .then(response=>response.text())
+    .then(dados => {
+        document.getElementById('valor_temperatura').innerText = dados;
+    })
+.catch(err => console.error('Erro ao buscar temperatura:', err));
+}
+setInterval(sensor_gas, 1000);
   </script>
 <div class="Mesma_Linha">
 <h1>Temperatura:</h1>
+<p>add valor aqui</p>
 </div>
 
 <br>
   <script>
+  function led() {
+    fetch('/luz')
+    .then(response=>response.text())
+    .then(dados => {
+        document.getElementById('estado-led').innerText = dados;
+    })
+.catch(err => console.error('Erro ao ligar luz:', err));
+}
+setInterval(sensor_gas, 1000);
   </script>
 <div class="Mesma_Linha">
 <h1>Estado do Led:</h1>
-<p> - Ligado</p>
+<p>add valor aqui</p>
 </div>
 <br>
                 </body>
