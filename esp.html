@@ -3,25 +3,67 @@
 
                 <head>
 <meta charset="UTF-8">
-<meta http-equiv='refresh' content='0.2'>
+<meta http-equiv='refresh' content='5'>
 <title> Servidor Web </title>
 
 
 <style>
 body{
-h1{
-font-size: 200%;
-color: darkblue;
-}
+    background-color: darkblue;
+    text-align: center;
+    
+#alinhar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 30px;
+    }
+    
+    .titulo{
+        background: lightgray;
+        border: 4px solid white;
+        font-size: 340%;
+        font-color: white;
+        }
+    
+    #elemento{
+        font-size: 240%;
+        font-color: black;
+        }
 
-h2{
-font-size: 130%;
-color: lightred;
-}
+    .quadro{
+        width: fit-content;
+        padding: 6px;
+        margin: auto;
+        border: 2px solid black;
+        background: lightgray;
+        }
+    
+    #valor{
+        font-size: 140%;
+        font-color: darkblue;
+        }
+    
+    .gas{
+        width: fit-content;
+        border: 8px solid green;
+        background: lightgreen;
+        padding: 25px;
+        }
 
-.Mesma_Linha{
-display: grid;
-}
+    .temperatura{
+        width: fit-content;
+        border: 8px solid green;
+        background: lightgreen;
+        padding: 25px;
+        }
+
+    .led{
+        width: fit-content;
+        border: 8px solid green;
+        background: lightgreen;
+        padding: 25px;
+        }
 
 }
 </style>
@@ -29,8 +71,9 @@ display: grid;
 
 
 <body>
-<h1>ESP8266</h1>
+<h1 class="titulo">Servidor Climático DSM</h1>
 <br>
+    <div id="alinhar">
   <script>
     function sensor_gas() {
     fetch('/gas')
@@ -40,14 +83,13 @@ display: grid;
     })
 .catch(err => console.error('Erro ao buscar gases:', err));
 }
-setInterval(sensor_gas, 1000);
+setInterval(sensor_gas, 10000);
   </script>
-<div class="Mesma_Linha">
-<h1>Presença de Gás:</h1>
-<p>add valor aqui</p>
+<div class="gas">
+<h1 id="elemento">Presença de Gás:</h1>
+<p id="valor" class="quadro">add valor aqui</p>
 </div>
 
-<br>
   <script>
   function temperatura() {
     fetch('/temp')
@@ -57,14 +99,13 @@ setInterval(sensor_gas, 1000);
     })
 .catch(err => console.error('Erro ao buscar temperatura:', err));
 }
-setInterval(sensor_gas, 1000);
+setInterval(sensor_gas, 10000);
   </script>
-<div class="Mesma_Linha">
-<h1>Temperatura:</h1>
-<p>add valor aqui</p>
+<div class="temperatura">
+<h1 id="elemento">Temperatura:</h1>
+<p id="valor" class="quadro">add valor aqui</p>
 </div>
 
-<br>
   <script>
   function led() {
     fetch('/luz')
@@ -74,13 +115,13 @@ setInterval(sensor_gas, 1000);
     })
 .catch(err => console.error('Erro ao ligar luz:', err));
 }
-setInterval(sensor_gas, 1000);
+setInterval(sensor_gas, 10000);
   </script>
-<div class="Mesma_Linha">
-<h1>Estado do Led:</h1>
-<p>add valor aqui</p>
+<div class="led">
+<h1 id="elemento">Estado do Led:</h1>
+<p id="valor" class="quadro">add valor aqui</p>
 </div>
-<br>
+        </div>
                 </body>
 
 
