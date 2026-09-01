@@ -50,9 +50,9 @@ void setup() {
 
   // ROTAS DO JS:
   server.on("/sensor", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(200, "text/plain", sensor_gas());
-    request->send(200, "text/plain", sensor_temperatura());
-    request->send(200, "text/plain", led());
+    request->send(200, "text/plain", valor_gas());
+    request->send(200, "text/plain", valor_temp());
+    request->send(200, "text/plain", valor_led());
   });
   
   server.begin();
@@ -76,7 +76,33 @@ void loop() {
 
   // SENSOR TEMP.:
   int valor_temp = 99;
+  int V_temp = digitalRead(sensor_gas);
+  if (V_temp == LOW){
+    Serial.println("gas => valor reconhecido");
+    V_temp = valor_temp;
+  }
+  if else (V_temp == HIGH){
+    Serial.println("gas => valor reconhecido");
+    V_temp = valor_temp;
+  }
+  else {
+    Serial.println("Err - gas => valor não reconhecido");
+  }
   
   // LED.:
-  String valor_gas ="Erro ao Ler";
+  String valor_led ="Erro ao Ler";
+  int V_led = digitalRead(led);
+  if (V_led == LOW){
+    Serial.println("gas => valor reconhecido");
+    valor_led = "desligado";
+  }
+  if else (V_led == HIGH){
+    Serial.println("gas => valor reconhecido");
+    valor_led = "ligado";
+  }
+  else {
+    Serial.println("Err - gas => valor não reconhecido");
+    valor_led = "erro no digital";
+  }
+
 }
