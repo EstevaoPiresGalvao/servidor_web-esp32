@@ -3,7 +3,7 @@
 
                 <head>
 <meta charset="UTF-8">
-<meta http-equiv='refresh' content='11'>
+<meta name="viewport" content="width = device-width, initial-scale=1.0">
 <title> Servidor Web </title>
 
 
@@ -43,28 +43,13 @@ body{
         font-size: 140%;
         font-color: darkblue;
         }
-    
-    .gas{
+  
+    .caixa{
         width: fit-content;
         border: 8px solid green;
         background: lightgreen;
         padding: 25px;
-        }
-
-    .temperatura{
-        width: fit-content;
-        border: 8px solid green;
-        background: lightgreen;
-        padding: 25px;
-        }
-
-    .led{
-        width: fit-content;
-        border: 8px solid green;
-        background: lightgreen;
-        padding: 25px;
-        }
-
+    }
 }
 </style>
                 </head>
@@ -78,32 +63,32 @@ body{
     function sensor_gas() {
     fetch('/gas')
     .then(response=>response.text())
-    .then(dados => {
-        document.getElementById('valor_gas').innerText = dados;
+    .then(gas => {
+        document.getElementById('gas').innerText = gas;
     })
 .catch(err => console.error('Erro ao buscar gases:', err));
 }
 setInterval(sensor_gas, 10000);
   </script>
-<div class="gas">
+<div class="caixa">
 <h1 id="elemento">Presença de Gás:</h1>
-<p id="valor" class="quadro">add valor aqui</p>
+<p id="gas" class="quadro">add valor aqui</p>
 </div>
 
   <script>
-  function temperatura() {
+  function sensor_temp() {
     fetch('/temp')
     .then(response=>response.text())
-    .then(dados => {
-        document.getElementById('valor_temperatura').innerText = dados;
+    .then(temp => {
+        document.getElementById('temp').innerText = temp;
     })
 .catch(err => console.error('Erro ao buscar temperatura:', err));
 }
-setInterval(sensor_gas, 10000);
+setInterval(sensor_temp, 10000);
   </script>
-<div class="temperatura">
+<div class="caixa">
 <h1 id="elemento">Temperatura:</h1>
-<p id="valor" class="quadro">add valor aqui</p>
+<p id="temp" class="quadro"></p>
 </div>
 
   <script>
@@ -111,15 +96,15 @@ setInterval(sensor_gas, 10000);
     fetch('/luz')
     .then(response=>response.text())
     .then(dados => {
-        document.getElementById('estado-led').innerText = dados;
+        document.getElementById('led').innerText = luz;
     })
 .catch(err => console.error('Erro ao ligar luz:', err));
 }
-setInterval(sensor_gas, 10000);
+setInterval(led, 10000);
   </script>
-<div class="led">
+<div class="caixa">
 <h1 id="elemento">Estado do Led:</h1>
-<p id="valor" class="quadro">add valor aqui</p>
+<p id="led" class="quadro"></p>
 </div>
         </div>
                 </body>
